@@ -79,7 +79,7 @@ lub Voodoo3.
 %build
 rm -f missing
 %{__libtoolize}
-aclocal
+%{__aclocal}
 %{__autoconf}
 %{__automake} -i
 %configure \
