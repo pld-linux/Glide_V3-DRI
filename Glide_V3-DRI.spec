@@ -142,10 +142,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%{_examplesdir}/glide3
-%{_libdir}/lib*.la
 %attr(755,root,root) %{_libdir}/libglide3.so
+%{_libdir}/lib*.la
 %{_includedir}/glide3
+%{_examplesdir}/glide3
 
 %files static
 %defattr(644,root,root,755)
