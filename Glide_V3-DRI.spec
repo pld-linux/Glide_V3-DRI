@@ -5,7 +5,7 @@ Summary:	Glide runtime for 3Dfx Voodoo Banshee and Voodoo3 boards
 Summary(pl):	Biblioteki Glide dla kart 3Dfx Voodoo Banshee oraz Voodoo3
 Name:		Glide_V3-DRI
 Version:	3.10.0
-Release:	0.%{snapdate}.2
+Release:	0.%{snapdate}.3
 Epoch:		1
 Group:		X11/Libraries
 Group(de):	X11/Libraries
@@ -30,6 +30,7 @@ BuildRequires:	autoconf
 BuildRequires:	libtool
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Provides:	Glide3-DRI
+Obsoletes:	Glide_V5-DRI
 
 %description 
 This library allows the user to use a 3dfx Interactive Voodoo Banshee
@@ -54,6 +55,7 @@ Group(ru):	X11/Разработка/Библиотеки
 Group(uk):	X11/Розробка/Б╕бл╕отеки
 Requires:	%{name} = %{version}
 Provides:	Glide3-DRI-devel
+Obsoletes:	Glide_V5-DRI-devel
 
 %description devel
 This package includes the headers files, documentation, and test files
@@ -78,6 +80,7 @@ Group(ru):	X11/Разработка/Библиотеки
 Group(uk):	X11/Розробка/Б╕бл╕отеки
 Requires:	%{name} = %{version}
 Provides:	Glide3-DRI-static
+Obsoletes:	Glide_V5-DRI-static
 
 %description static
 This package includes the static Glide3 library for Voodoo Banshee or
