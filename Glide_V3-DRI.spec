@@ -127,6 +127,7 @@ install h3/glide3/tests/*.3df $RPM_BUILD_ROOT%{_examplesdir}/glide3/tests
 install h3/glide3/tests/test??.c $RPM_BUILD_ROOT%{_examplesdir}/glide3/tests
 install h3/glide3/tests/tldata.inc $RPM_BUILD_ROOT%{_examplesdir}/glide3/tests
 install h3/glide3/tests/tlib.[ch] $RPM_BUILD_ROOT%{_examplesdir}/glide3/tests
+gzip -9nf $RPM_BUILD_ROOT%{_examplesdir}/glide3/tests/*.3df
 
 %clean
 rm -rf $RPM_BUILD_ROOT
