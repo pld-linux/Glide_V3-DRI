@@ -3,7 +3,7 @@ Summary:	Glide runtime for 3Dfx Voodoo Banshee and Voodoo3 boards
 Summary(pl):	Biblioteki Glide dla kart 3Dfx Voodoo Banshee oraz Voodoo3
 Name:		Glide_V3-DRI
 Version:	3.10.0
-Release:	0.%{snapdate}.6
+Release:	0.%{snapdate}.7
 Epoch:		1
 License:	3dfx Glide General Public License, 3Dfx Interactive Inc.
 Vendor:		3dfx Interactive Inc.
@@ -13,6 +13,7 @@ Patch0:		glide-ia64.patch
 Patch1:		glide-ac-workaround.patch
 Patch2:		glide-h3.patch
 Patch3:		glide-h5.patch
+Patch4:		glide-am16.patch
 Icon:		3dfx.gif
 URL:		http://glide.sourceforge.net/
 BuildRequires:	XFree86-devel
@@ -73,13 +74,14 @@ lub Voodoo3.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 rm -f missing
 libtoolize --copy --force
 aclocal
 autoconf
-automake -a -c -i
+automake -a -c -f -i
 %configure \
 	--enable-fx-dri-build \
 	--enable-fx-glide-hw=h3 \
@@ -102,6 +104,9 @@ install -d $RPM_BUILD_ROOT%{_examplesdir}/glide3/tests
 	GLIDE_DEBUG_GDEFS="%{!?debug:-DBIG_OPT} %{?debug:-DGDBG_INFO_ON -DGLIDE_DEBUG}" \
 	DESTDIR=$RPM_BUILD_ROOT
 
+# used by tdfx_dri.so from XFree86
+ln -sf libglide3.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libglide3-v3.so
+# used by ???
 ln -sf libglide3.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libglide3x_V3.so
 ln -sf libglide3.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libglide3x.so
 
@@ -124,6 +129,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc glide_license.txt.gz
 %attr(755,root,root) %{_libdir}/libglide3.so.*.*.*
+%attr(755,root,root) %{_libdir}/libglide3-v3.so
 %attr(755,root,root) %{_libdir}/libglide3x.so
 %attr(755,root,root) %{_libdir}/libglide3x_V3.so
 
