@@ -1,12 +1,12 @@
-#
-# _with_3dnow	- with 3Dnow! instructions
 %define snapdate 20010309
 Summary:	Glide runtime for 3Dfx Voodoo Banshee and Voodoo3 boards
 Summary(pl):	Biblioteki Glide dla kart 3Dfx Voodoo Banshee oraz Voodoo3
 Name:		Glide_V3-DRI
 Version:	3.10.0
-Release:	0.%{snapdate}.4
+Release:	0.%{snapdate}.5
 Epoch:		1
+License:	3dfx Glide General Public License, 3Dfx Interactive Inc.
+Vendor:		3dfx Interactive Inc.
 Group:		X11/Libraries
 Group(de):	X11/Libraries
 Group(es):	X11/Bibliotecas
@@ -15,15 +15,13 @@ Group(pl):	X11/Biblioteki
 Group(pt_BR):	X11/Bibliotecas
 Group(ru):	X11/‚…¬Ã…œ‘≈À…
 Group(uk):	X11/‚¶¬Ã¶œ‘≈À…
-License:	3dfx Glide General Public License, 3Dfx Interactive Inc.
-URL:		http://glide.sourceforge.net/
 Source0:	cvs://anonymous@cvs.glide.sourceforge.net:/cvsroot/glide/glide3x-%{snapdate}.tar.gz
 Patch0:		glide-ia64.patch
 Patch1:		glide-ac-workaround.patch
 Patch2:		glide-h3.patch
 Patch3:		glide-h5.patch
-Vendor:		3dfx Interactive Inc.
 Icon:		3dfx.gif
+URL:		http://glide.sourceforge.net/
 BuildRequires:	XFree86-devel
 BuildRequires:	automake
 BuildRequires:	autoconf
@@ -39,7 +37,7 @@ or non-DRI versions of Glide.
 
 %description -l pl
 Ta biblioteka pozwala uøytkownikowi na uøywanie kart 3dfx Interactive
-Voodoo Banshee lub Voodoo3 pod Linux'em z DRI. Ta wersja zawiera
+Voodoo Banshee lub Voodoo3 pod Linuksem z DRI. Ta wersja zawiera
 wsparcie dla wersji Glide z DRI i bez DRI.
 
 %package devel
@@ -62,7 +60,7 @@ This package includes the headers files, documentation, and test files
 necessary for developing applications that use the 3Dfx Interactive
 Voodoo Banshee or Voodoo3 cards.
 
-%description -l pl devel
+%description devel -l pl
 Ten pakiet zawiera pliki nag≥Ûwkowe, dokumentacje, oraz pliki tekstowe
 wymagane przez aplikacje deweloperskie, ktÛre uøywaj± kart 3Dfx
 Interactive Voodoo Banshe lub Voodoo3.
@@ -86,7 +84,7 @@ Obsoletes:	Glide_V5-DRI-static
 This package includes the static Glide3 library for Voodoo Banshee or
 Voodoo3 cards.
 
-%description -l pl static
+%description static -l pl
 Ten pakiet zawiera statyczne biblioteki Glide3 dla kart Voodoo Banshee
 lub Voodoo3.
 
@@ -107,7 +105,9 @@ automake -a -c -i
 	--enable-fx-dri-build \
 	--enable-fx-glide-hw=h3 \
 	--enable-fx-debug=no \
-	%{?_with_3dnow:--enable-amd3d}
+%ifarch i586 i686
+	--enable-amd3d
+%endif
 
 %{__make} -f makefile.autoconf all \
 	GLIDE_DEBUG_GCFLAGS="%{rpmcflags} -fno-expensive-optimizations %{!?debug:-fomit-frame-pointer -ffast-math}" \
@@ -150,7 +150,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-#%doc docs/*.pdf
 %{_examplesdir}/glide3
 %attr(755,root,root) %{_libdir}/lib*.la
 %attr(755,root,root) %{_libdir}/libglide3.so
