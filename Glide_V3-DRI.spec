@@ -40,7 +40,7 @@ wsparcie dla wersji Glide z DRI i bez DRI.
 Summary:	Development headers for Glide 3.x
 Summary(pl):	Pliki nag³ówkowe Glide 3.x
 Group:		X11/Development/Libraries
-Requires:	%{name} = %{epoch}:%{version}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 Provides:	Glide3-DRI-devel
 Obsoletes:	Glide_V5-DRI-devel
 
@@ -58,7 +58,7 @@ Interactive Voodoo Banshe lub Voodoo3.
 Summary:	Static library Glide 3.x
 Summary(pl):	Statyczne biblioteki Glide 3.x
 Group:		X11/Development/Libraries
-Requires:	%{name}-devel = %{epoch}:%{version}
+Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 Provides:	Glide3-DRI-static
 Obsoletes:	Glide_V5-DRI-static
 
