@@ -4,7 +4,7 @@ Summary(ko):	3Dfx 부두 벤쉬/3 비디오카드용 Glide 런타임 라이브러리
 Summary(pl):	Biblioteki Glide dla kart 3Dfx Voodoo Banshee oraz Voodoo3
 Name:		Glide_V3-DRI
 Version:	3.10.0
-Release:	0.%{snapdate}.9
+Release:	0.%{snapdate}.10
 Epoch:		1
 License:	3dfx Glide General Public License, 3Dfx Interactive Inc.
 Vendor:		3dfx Interactive Inc.
@@ -17,6 +17,8 @@ Patch2:		glide-h3.patch
 Patch3:		glide-h5.patch
 Patch4:		glide-am16.patch
 Patch5:		glide-gcc33.patch
+Patch6:		glide-ioctl.patch
+Patch7:		glide-morearchs.patch
 Icon:		3dfx.gif
 URL:		http://glide.sourceforge.net/
 BuildRequires:	XFree86-devel
@@ -79,9 +81,10 @@ lub Voodoo3.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 %build
-rm -f missing
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
@@ -96,7 +99,8 @@ rm -f missing
 
 %{__make} -f makefile.autoconf all \
 	GLIDE_DEBUG_GCFLAGS="%{rpmcflags} -fno-expensive-optimizations %{!?debug:-fomit-frame-pointer -ffast-math}" \
-	GLIDE_DEBUG_GDEFS="%{!?debug:-DBIG_OPT} %{?debug:-DGDBG_INFO_ON -DGLIDE_DEBUG}"
+	GLIDE_DEBUG_GDEFS="%{!?debug:-DBIG_OPT} %{?debug:-DGDBG_INFO_ON -DGLIDE_DEBUG}" \
+	LINK_LIBS="-L/usr/X11R6/%{_lib} -lX11 -lXext -lXxf86dga -lXxf86vm -lm"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -106,6 +110,7 @@ install -d $RPM_BUILD_ROOT%{_examplesdir}/glide3/tests
 %{__make} -f makefile.autoconf install \
 	GLIDE_DEBUG_GCFLAGS="%{rpmcflags} -fno-expensive-optimizations %{!?debug:-fomit-frame-pointer -ffast-math}" \
 	GLIDE_DEBUG_GDEFS="%{!?debug:-DBIG_OPT} %{?debug:-DGDBG_INFO_ON -DGLIDE_DEBUG}" \
+	LINK_LIBS="-L/usr/X11R6/%{_lib} -lX11 -lXext -lXxf86dga -lXxf86vm -lm" \
 	DESTDIR=$RPM_BUILD_ROOT
 
 # used by tdfx_dri.so from XFree86
