@@ -1,15 +1,18 @@
-%define snapdate 20001102
+%define snapdate 20010309
 Summary:	Glide runtime for 3Dfx Voodoo Banshee and Voodoo3 boards
 Name:		Glide_V3-DRI
-Version:	3.10
-Release:	20001102.1
+Version:	3.10.0
+Release:	%{snapdate}.1
 Group:		Libraries
 Copyright:	3dfx Glide General Public License, 3Dfx Interactive Inc.
-URL:		http://www.3dfx.com	
-Source:		Glide3-CVS-%{snapdate}.tar.bz2
+URL:		http://glide.sourceforge.net/
+Source:		cvs://anonymous@cvs.glide.sourceforge.net:/cvsroot/glide/glide3x-%{snapdate}.tar.gz
+Patch:		glide-ia64.patch
 Vendor:		3dfx Interactive Inc.
 Icon:		3dfx.gif
 BuildRequires:	XFree86-devel
+BuildRequires:	automake
+BuildRequires:	autoconf
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description 
@@ -36,42 +39,37 @@ Requires:	%{name} = %{version}
 This package includes the static Glide3 library.
 
 %prep
-%setup -q -n Glide3
+%setup -q -n glide3x-%{snapdate}
+%patch0 -p1
 
 %build
-mv chores.3dfx chores.3dfx.bak
-echo "#!/bin/bash" > chores.3dfx
-cat chores.3dfx.bak >> chores.3dfx
-chmod 755 chores.3dfx
+rm -f missing
+aclocal
+automake -a -c
+autoconf
+%configure \
+	--enable-fx-dri-build \
+	--enable-fx-glide-hw=h3 \
+	--enable-fx-debug=no
 
-CFLAGS="$RPM_OPT_FLAGS"
-CXXFLAGS="$RPM_OPT_FLAGS"
-GLIDE_DEBUG_GCFLAGS="$RPM_OPT_FLAGS"
-export CFLAGS CXXFLAGS GLIDE_DEBUG_GCFLAGS
-mv -f swlibs/include/make/makefile.autoconf.bottom swlibs/include/make/makefile.autoconf.bottom.bak
-sed "s,GLIDE_DEBUG_GCFLAGS = -O6 -m486,GLIDE_DEBUG_GCFLAGS = $RPM_OPT_FLAGS -I/usr/X11R6/include," swlibs/include/make/makefile.autoconf.bottom.bak > swlibs/include/make/makefile.autoconf.bottom
-./chores.3dfx \
-	--clean \
-	--generate \
-	--configure="--enable-fx-dri-build --enable-fx-glide-hw=h3" \
-	--build
+%{__make} -f makefile.autoconf all
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_examplesdir}/glide3/tests
 
-make -C build -f makefile.autoconf install \
+%{__make} -f makefile.autoconf install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-ln -s libglide3.so.*.*.* $RPM_BUILD_ROOT%{_libdir}/libglide3x_V3.so
-ln -s libglide3.so.*.*.* $RPM_BUILD_ROOT%{_libdir}/libglide3x.so
+ln -s libglide3.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libglide3x_V3.so
+ln -s libglide3.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libglide3x.so
 
 # Install the examples and their source, no binaries
-install h3/glide3/tests/makefile.distrib $RPM_BUILD_ROOT%{_prefix}/src/examples/glide3/tests/makefile
-install h3/glide3/tests/*.3df $RPM_BUILD_ROOT%{_prefix}/src/examples/glide3/tests
-install h3/glide3/tests/test??.c $RPM_BUILD_ROOT%{_prefix}/src/examples/glide3/tests
-install h3/glide3/tests/tldata.inc $RPM_BUILD_ROOT%{_prefix}/src/examples/glide3/tests
-install h3/glide3/tests/tlib.[ch] $RPM_BUILD_ROOT%{_prefix}/src/examples/glide3/tests
+install h3/glide3/tests/makefile.distrib $RPM_BUILD_ROOT%{_examplesdir}/glide3/tests/makefile
+install h3/glide3/tests/*.3df $RPM_BUILD_ROOT%{_examplesdir}/glide3/tests
+install h3/glide3/tests/test??.c $RPM_BUILD_ROOT%{_examplesdir}/glide3/tests
+install h3/glide3/tests/tldata.inc $RPM_BUILD_ROOT%{_examplesdir}/glide3/tests
+install h3/glide3/tests/tlib.[ch] $RPM_BUILD_ROOT%{_examplesdir}/glide3/tests
 
 gzip -9nf glide_license.txt
 
@@ -85,14 +83,15 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc glide_license.txt.gz
 %attr(755,root,root) %{_libdir}/libglide3.so.*.*.*
-%attr(755,root,root) %{_libdir}/libglide3.so
 %attr(755,root,root) %{_libdir}/libglide3x.so
 %attr(755,root,root) %{_libdir}/libglide3x_V3.so
 
 %files devel
 %defattr(644,root,root,755)
 #%doc docs/*.pdf
-%{_prefix}/src/examples/glide3
+%{_examplesdir}/glide3
+%attr(755,root,root) %{_libdir}/lib*.la
+%attr(755,root,root) %{_libdir}/libglide3.so
 %{_includedir}/glide3
 
 %files static
