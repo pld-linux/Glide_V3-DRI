@@ -5,7 +5,7 @@ Summary(pl):	Biblioteki Glide dla kart 3Dfx Voodoo Banshee oraz Voodoo3
 Name:		Glide_V3-DRI
 Version:	3.10.0
 Release:	0.%{snapdate}.10
-Epoch:		1
+Epoch:		2
 License:	3dfx Glide General Public License, 3Dfx Interactive Inc.
 Vendor:		3dfx Interactive Inc.
 Group:		X11/Libraries
@@ -19,6 +19,7 @@ Patch4:		glide-am16.patch
 Patch5:		glide-gcc33.patch
 Patch6:		glide-ioctl.patch
 Patch7:		glide-morearchs.patch
+Patch8:		glide-gcc34.patch
 Icon:		3dfx.gif
 URL:		http://glide.sourceforge.net/
 BuildRequires:	XFree86-devel
@@ -83,6 +84,7 @@ lub Voodoo3.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 %build
 %{__libtoolize}
@@ -93,7 +95,7 @@ lub Voodoo3.
 	--enable-fx-dri-build \
 	--enable-fx-glide-hw=h3 \
 	--enable-fx-debug=no \
-%ifarch i586 i686 athlon
+%ifarch i586 i686 athlon pentium3 pentium4
 	--enable-amd3d
 %endif
 
