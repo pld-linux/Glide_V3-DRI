@@ -31,7 +31,7 @@ chmod +x swlibs/include/make/ostype
 
 %build
 export FX_GLIDE_HW=h3
-make -f makefile.linux CNODEBUG="$RPM_OPT_FLAGS -fomit-frame-pointer \
+%{__make} -f makefile.linux CNODEBUG="$RPM_OPT_FLAGS -fomit-frame-pointer \
 	-funroll-loops -fexpensive-optimizations -ffast-math -DBIG_OPT"
 
 %install
