@@ -1,0 +1,133 @@
+--- glide3x-20010309/h3/minihwc/linhwc.c.dri.orig	2004-04-26 00:29:32.000000000 +0200
++++ glide3x-20010309/h3/minihwc/linhwc.c.dri	2004-04-27 23:05:40.677616968 +0200
+@@ -304,6 +304,65 @@
+   return FXTRUE;
+ }
+ 
++static FxU32
++hwcBufferLfbAddr(const hwcBoardInfo *bInfo, FxU32 physAddress)
++{
++  FxU32 retVal = 0x00UL;
++
++  FxU32 tileAddress;
++  FxU32 tileNumber;
++  FxU32 tileOffset;
++  FxU32 tileXOffset;
++  FxU32 tileScanline;
++  FxU32 tileRow;
++  FxU32 lfbAddress;
++  FxU32 lfbYOffset;
++  /*
++   * This is the tile aperture stride.  It is always 4096 for V3.
++   */
++  FxU32 lfbBufferStride = 0x1000;
++
++  if (bInfo->vidInfo.tiled) {    
++    GDBG_INFO(80, "\tphysAddress: 0x%08lx\n",physAddress);
++
++    /* Compute address in tile space */
++    tileAddress = physAddress - driInfo.backOffset;
++    GDBG_INFO(80, "\ttileAddress: 0x%08lx\n",tileAddress);
++
++    /* Compute tile number we're in (each tile is 4K bytes) */
++    tileNumber = tileAddress >> 12;
++    GDBG_INFO(80, "\ttileNumber: 0x%08lx (%d)\n",tileNumber,tileNumber);
++
++    /* Compute base tile row we're in */
++    tileRow = tileNumber / bInfo->buffInfo.bufStrideInTiles;
++    GDBG_INFO(80, "\ttileRow: %d  (stride = %d)\n",tileNumber,bInfo->buffInfo.bufStrideInTiles);
++
++    /* Compute offset within the tile */
++    tileOffset = tileAddress - (tileNumber << 12);
++    GDBG_INFO(80, "\ttileOffset: 0x%08lx\n",tileOffset);
++
++    /* Compute scanline within the tile */
++    tileScanline = tileOffset >> 7;
++    GDBG_INFO(80, "\ttileScanline: 0x%08lx\n",tileScanline);
++
++    /* Compute tile X offset within the row */
++    tileXOffset = tileNumber - (tileRow * bInfo->buffInfo.bufStrideInTiles);
++    GDBG_INFO(80, "\ttileXOffset: %d\n",tileXOffset);
++
++    /* Compute Y offset in LFB space */
++    lfbYOffset = (tileRow * 32 + tileScanline);
++
++    /* Compute LFB address of tile start */
++    lfbAddress =  driInfo.backOffset + lfbYOffset * lfbBufferStride + tileXOffset * 128;
++
++    GDBG_INFO(80, "\tlfbAddress: %08lx\n", lfbAddress);
++    retVal = lfbAddress;
++  } else {
++    retVal = physAddress;
++  }
++  return retVal;
++}
++
+ FxBool
+ hwcAllocBuffers(hwcBoardInfo *bInfo, FxU32 nColBuffers, FxU32 nAuxBuffers) 
+ {
+@@ -620,64 +679,7 @@
+  * boundaries will cause the tiled lfb access to be off by a page so
+  * we add in the width of a page (HWC_TILED_BUFFER_X_ADJUST) here.
+  */
+-static FxU32
+-hwcBufferLfbAddr(const hwcBoardInfo *bInfo, FxU32 physAddress)
+-{
+-  FxU32 retVal = 0x00UL;
+-
+-  FxU32 tileAddress;
+-  FxU32 tileNumber;
+-  FxU32 tileOffset;
+-  FxU32 tileXOffset;
+-  FxU32 tileScanline;
+-  FxU32 tileRow;
+-  FxU32 lfbAddress;
+-  FxU32 lfbYOffset;
+-  /*
+-   * This is the tile aperture stride.  It is always 4096 for V3.
+-   */
+-  FxU32 lfbBufferStride = 0x1000;
+-
+-  if (bInfo->vidInfo.tiled) {    
+-    GDBG_INFO(80, "\tphysAddress: 0x%08lx\n",physAddress);
+-
+-    /* Compute address in tile space */
+-    tileAddress = physAddress - driInfo.backOffset;
+-    GDBG_INFO(80, "\ttileAddress: 0x%08lx\n",tileAddress);
+-
+-    /* Compute tile number we're in (each tile is 4K bytes) */
+-    tileNumber = tileAddress >> 12;
+-    GDBG_INFO(80, "\ttileNumber: 0x%08lx (%d)\n",tileNumber,tileNumber);
+ 
+-    /* Compute base tile row we're in */
+-    tileRow = tileNumber / bInfo->buffInfo.bufStrideInTiles;
+-    GDBG_INFO(80, "\ttileRow: %d  (stride = %d)\n",tileNumber,bInfo->buffInfo.bufStrideInTiles);
+-
+-    /* Compute offset within the tile */
+-    tileOffset = tileAddress - (tileNumber << 12);
+-    GDBG_INFO(80, "\ttileOffset: 0x%08lx\n",tileOffset);
+-
+-    /* Compute scanline within the tile */
+-    tileScanline = tileOffset >> 7;
+-    GDBG_INFO(80, "\ttileScanline: 0x%08lx\n",tileScanline);
+-
+-    /* Compute tile X offset within the row */
+-    tileXOffset = tileNumber - (tileRow * bInfo->buffInfo.bufStrideInTiles);
+-    GDBG_INFO(80, "\ttileXOffset: %d\n",tileXOffset);
+-
+-    /* Compute Y offset in LFB space */
+-    lfbYOffset = (tileRow * 32 + tileScanline);
+-
+-    /* Compute LFB address of tile start */
+-    lfbAddress =  driInfo.backOffset + lfbYOffset * lfbBufferStride + tileXOffset * 128;
+-
+-    GDBG_INFO(80, "\tlfbAddress: %08lx\n", lfbAddress);
+-    retVal = lfbAddress;
+-  } else {
+-    retVal = physAddress;
+-  }
+-  return retVal;
+-}
+ FxU32 
+ hwcInitAGPFifo(hwcBoardInfo *bInfo, FxBool enableHoleCounting) 
+ {
