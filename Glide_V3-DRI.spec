@@ -1,11 +1,12 @@
 Summary:	Glide runtime for 3Dfx Voodoo Banshee and Voodoo3 boards
 Name:		Glide_V3-DRI
 Version:	3.10
-Release:	6
+Release:	7
 Group:		Libraries
 Copyright:	3dfx Glide General Public License, 3Dfx Interactive Inc.
 URL:		http://www.3dfx.com	
 Source:		Glide3.10.tar.gz
+Patch:		Glide3.10-CVS-20000616.patch.gz
 Vendor:		3dfx Interactive Inc.
 Icon:		3dfx.gif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -27,7 +28,13 @@ Voodoo Banshe or Voodoo3 cards.
 
 %prep
 %setup -q -c
+%patch -p1
 chmod +x swlibs/include/make/ostype
+
+ln -sf linhwc.c.dri h3/minihwc/linhwc.c
+ln -sf gsst.c.dri h3/glide3/src/gsst.c
+ln -sf glfb.c.dri h3/glide3/src/glfb.c
+ln -sf gglide.c.dri h3/glide3/src/gglide.c
 
 %build
 export FX_GLIDE_HW=h3
