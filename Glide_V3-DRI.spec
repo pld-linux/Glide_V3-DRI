@@ -35,7 +35,7 @@ or non-DRI versions of Glide.
 %description -l pl
 Ta biblioteka pozwala u¿ytkownikowi na u¿ywanie kart 3dfx Interactive
 Voodoo Banshee lub Voodoo3 pod Linux'em z DRI. Ta wersja zawiera
-wsparcie dla wersji Glide'a z DRI i bez DRI.
+wsparcie dla wersji Glide z DRI i bez DRI.
 
 %package devel
 Summary:	Development headers for Glide 3.x
@@ -49,7 +49,7 @@ Requires:	%{name} = %{version}
 %description devel
 This package includes the headers files, documentation, and test files
 necessary for developing applications that use the 3Dfx Interactive
-Voodoo Banshe or Voodoo3 cards.
+Voodoo Banshee or Voodoo3 cards.
 
 %description -l pl devel
 Ten pakiet zawiera pliki nag³ówkowe, dokumentacje, oraz pliki tekstowe
@@ -66,10 +66,12 @@ Group(pl):	X11/Programowanie/Biblioteki
 Requires:	%{name} = %{version}
 
 %description static
-This package includes the static Glide3 library.
+This package includes the static Glide3 library for Voodoo Banshee or
+Voodoo3 cards.
 
 %description -l pl static
-Ten pakiet zawiera statyczne biblioteki Glide3.
+Ten pakiet zawiera statyczne biblioteki Glide3 dla kart Voodoo Banshee
+lub Voodoo3.
 
 %prep
 %setup -q -n glide3x-%{snapdate}
