@@ -9,6 +9,7 @@ URL:		http://www.3dfx.com
 Source:		Glide3-CVS-%{snapdate}.tar.bz2
 Vendor:		3dfx Interactive Inc.
 Icon:		3dfx.gif
+BuildRequires:	XFree86-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description 
@@ -48,7 +49,7 @@ CXXFLAGS="$RPM_OPT_FLAGS"
 GLIDE_DEBUG_GCFLAGS="$RPM_OPT_FLAGS"
 export CFLAGS CXXFLAGS GLIDE_DEBUG_GCFLAGS
 mv -f swlibs/include/make/makefile.autoconf.bottom swlibs/include/make/makefile.autoconf.bottom.bak
-sed "s,GLIDE_DEBUG_GCFLAGS = -O6 -m486,GLIDE_DEBUG_GCFLAGS = $RPM_OPT_FLAGS," swlibs/include/make/makefile.autoconf.bottom.bak > swlibs/include/make/makefile.autoconf.bottom
+sed "s,GLIDE_DEBUG_GCFLAGS = -O6 -m486,GLIDE_DEBUG_GCFLAGS = $RPM_OPT_FLAGS -I/usr/X11R6/include," swlibs/include/make/makefile.autoconf.bottom.bak > swlibs/include/make/makefile.autoconf.bottom
 ./chores.3dfx \
 	--clean \
 	--generate \
