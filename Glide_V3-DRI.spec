@@ -1,7 +1,7 @@
 Summary:	Glide runtime for 3Dfx Voodoo Banshee and Voodoo3 boards
 Name:		Glide_V3-DRI
 Version:	3.10
-Release:	7
+Release:	8
 Group:		Libraries
 Copyright:	3dfx Glide General Public License, 3Dfx Interactive Inc.
 URL:		http://www.3dfx.com	
@@ -59,6 +59,7 @@ install h3/include/glide.h $RPM_BUILD_ROOT%{_includedir}/glide3
 install h3/include/glidesys.h $RPM_BUILD_ROOT%{_includedir}/glide3
 install h3/include/glideutl.h $RPM_BUILD_ROOT%{_includedir}/glide3
 install h3/include/sst1vid.h $RPM_BUILD_ROOT%{_includedir}/glide3
+install h3/glide3/src/g3ext.h $RPM_BUILD_ROOT%{_includedir}/glide3
 install swlibs/include/linutil.h $RPM_BUILD_ROOT%{_includedir}/glide3
 install swlibs/include/texus.h $RPM_BUILD_ROOT%{_includedir}/glide3
 
