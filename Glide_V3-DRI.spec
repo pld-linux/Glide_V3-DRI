@@ -1,5 +1,6 @@
 %define snapdate 20010309
 Summary:	Glide runtime for 3Dfx Voodoo Banshee and Voodoo3 boards
+Summary(ko):	3Dfx 부두 벤쉬/3 비디오카드용 Glide 런타임 라이브러리
 Summary(pl):	Biblioteki Glide dla kart 3Dfx Voodoo Banshee oraz Voodoo3
 Name:		Glide_V3-DRI
 Version:	3.10.0
