@@ -1,9 +1,14 @@
 %define snapdate 20010309
 Summary:	Glide runtime for 3Dfx Voodoo Banshee and Voodoo3 boards
+Summary(pl):	Biblioteki Glide dla kart 3Dfx Voodoo Banshee oraz Voodoo3
 Name:		Glide_V3-DRI
 Version:	3.10.0
 Release:	%{snapdate}.1
 Group:		Libraries
+Group(pl):	Biblioteki
+Group(es):	Bibliotecas
+Group(fr):	Librairies
+Group(de):	Libraries
 Copyright:	3dfx Glide General Public License, 3Dfx Interactive Inc.
 URL:		http://glide.sourceforge.net/
 Source:		cvs://anonymous@cvs.glide.sourceforge.net:/cvsroot/glide/glide3x-%{snapdate}.tar.gz
@@ -20,9 +25,17 @@ This library allows the user to use a 3dfx Interactive Voodoo Banshee
 or Voodoo3 card under Linux with DRI support. The source support DRI
 or non-DRI versions of Glide.
 
+%description -l pl
+Ta biblioteka pozwala u¿ytkownikowi na u¿ywanie kart 3dfx Interactive 
+Voodoo Banshee lub Voodoo3 pod Linux'em z DRI. Ta wersja zawiera wsparcie
+dla wersji Glide'a z DRI i bez DRI.
+
 %package devel
 Summary:	Development headers for Glide 3.x
 Group:		Development/Libraries
+Group(pl):	Programowanie/Biblioteki
+Group(de):	Entwicklung/Libraries
+Group(fr):	Development/Librairies
 Requires:	%{name} = %{version}
 
 %description devel
@@ -30,13 +43,25 @@ This package includes the headers files, documentation, and test files
 necessary for developing applications that use the 3Dfx Interactive
 Voodoo Banshe or Voodoo3 cards.
 
+%description -l pl devel
+Ten pakiet zawiera pliki nag³ówkowe, dokumentacje, oraz pliki tekstowe
+wymagane przez aplikacje deweloperskie, które u¿ywaj± kart 3Dfx Interactive
+Voodoo Banshe lub Voodoo3.
+
 %package static
 Summary:	Static library Glide 3.x
+Summary(pl):	Statyczne biblioteki Glide 3.x
 Group:		Development/Libraries
+Group(pl):      Programowanie/Biblioteki
+Group(de):      Entwicklung/Libraries
+Group(fr):      Development/Librairies
 Requires:	%{name} = %{version}
 
 %description static
 This package includes the static Glide3 library.
+
+%description -l pl static
+Ten pakiet zawiera statyczne biblioteki Glide3.
 
 %prep
 %setup -q -n glide3x-%{snapdate}
