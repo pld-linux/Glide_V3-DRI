@@ -4,7 +4,7 @@ Summary(ko):	3Dfx 부두 벤쉬/3 비디오카드용 Glide 런타임 라이브러리
 Summary(pl):	Biblioteki Glide dla kart 3Dfx Voodoo Banshee oraz Voodoo3
 Name:		Glide_V3-DRI
 Version:	3.10.0
-Release:	0.%{snapdate}.7
+Release:	0.%{snapdate}.8
 Epoch:		1
 License:	3dfx Glide General Public License, 3Dfx Interactive Inc.
 Vendor:		3dfx Interactive Inc.
@@ -40,7 +40,7 @@ wsparcie dla wersji Glide z DRI i bez DRI.
 Summary:	Development headers for Glide 3.x
 Summary(pl):	Pliki nag농wkowe Glide 3.x
 Group:		X11/Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{epoch}:%{version}
 Provides:	Glide3-DRI-devel
 Obsoletes:	Glide_V5-DRI-devel
 
@@ -58,7 +58,7 @@ Interactive Voodoo Banshe lub Voodoo3.
 Summary:	Static library Glide 3.x
 Summary(pl):	Statyczne biblioteki Glide 3.x
 Group:		X11/Development/Libraries
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{epoch}:%{version}
 Provides:	Glide3-DRI-static
 Obsoletes:	Glide_V5-DRI-static
 
