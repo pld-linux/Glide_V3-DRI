@@ -1,3 +1,5 @@
+#
+# _with_3dnow	- with 3Dnow! instructions
 %define snapdate 20010309
 Summary:	Glide runtime for 3Dfx Voodoo Banshee and Voodoo3 boards
 Summary(pl):	Biblioteki Glide dla kart 3Dfx Voodoo Banshee oraz Voodoo3
@@ -14,6 +16,9 @@ License:	3dfx Glide General Public License, 3Dfx Interactive Inc.
 URL:		http://glide.sourceforge.net/
 Source0:	cvs://anonymous@cvs.glide.sourceforge.net:/cvsroot/glide/glide3x-%{snapdate}.tar.gz
 Patch0:		glide-ia64.patch
+Patch1:		glide-ac-workaround.patch
+Patch2:		glide-h3.patch
+Patch3:		glide-h5.patch
 Vendor:		3dfx Interactive Inc.
 Icon:		3dfx.gif
 BuildRequires:	XFree86-devel
@@ -69,6 +74,9 @@ Ten pakiet zawiera statyczne biblioteki Glide3.
 %prep
 %setup -q -n glide3x-%{snapdate}
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 rm -f missing
@@ -79,19 +87,25 @@ automake -a -c
 %configure \
 	--enable-fx-dri-build \
 	--enable-fx-glide-hw=h3 \
-	--enable-fx-debug=no
+	--enable-fx-debug=no \
+	%{?_with_3dnow:--enable-amd3d}
 
-%{__make} -f makefile.autoconf all
+%{__make} -f makefile.autoconf all \
+	GLIDE_DEBUG_GCFLAGS="%{rpmcflags} %{!?debug:-fomit-frame-pointer -ffast-math}" \
+	GLIDE_DEBUG_GDEFS="%{!?debug:-DBIG_OPT} %{?debug:-DGDBG_INFO_ON -DGLIDE_DEBUG}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_examplesdir}/glide3/tests
 
+# something is recompiled - use GCFLAGS too
 %{__make} -f makefile.autoconf install \
+	GLIDE_DEBUG_GCFLAGS="%{rpmcflags} %{!?debug:-fomit-frame-pointer -ffast-math}" \
+	GLIDE_DEBUG_GDEFS="%{!?debug:-DBIG_OPT} %{?debug:-DGDBG_INFO_ON -DGLIDE_DEBUG}" \
 	DESTDIR=$RPM_BUILD_ROOT
 
-ln -s libglide3.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libglide3x_V3.so
-ln -s libglide3.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libglide3x.so
+ln -sf libglide3.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libglide3x_V3.so
+ln -sf libglide3.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libglide3x.so
 
 # Install the examples and their source, no binaries
 install h3/glide3/tests/makefile.distrib $RPM_BUILD_ROOT%{_examplesdir}/glide3/tests/makefile
