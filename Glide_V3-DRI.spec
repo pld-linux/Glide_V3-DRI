@@ -5,7 +5,7 @@ Summary:	Glide runtime for 3Dfx Voodoo Banshee and Voodoo3 boards
 Summary(pl):	Biblioteki Glide dla kart 3Dfx Voodoo Banshee oraz Voodoo3
 Name:		Glide_V3-DRI
 Version:	3.10.0
-Release:	0.%{snapdate}
+Release:	0.%{snapdate}.1
 Epoch:		1
 Group:		X11/Libraries
 Group(de):	X11/Libraries
@@ -91,7 +91,7 @@ automake -a -c
 	%{?_with_3dnow:--enable-amd3d}
 
 %{__make} -f makefile.autoconf all \
-	GLIDE_DEBUG_GCFLAGS="%{rpmcflags} %{!?debug:-fomit-frame-pointer -ffast-math}" \
+	GLIDE_DEBUG_GCFLAGS="%{rpmcflags} -fno-expensive-optimizations %{!?debug:-fomit-frame-pointer -ffast-math}" \
 	GLIDE_DEBUG_GDEFS="%{!?debug:-DBIG_OPT} %{?debug:-DGDBG_INFO_ON -DGLIDE_DEBUG}"
 
 %install
@@ -100,7 +100,7 @@ install -d $RPM_BUILD_ROOT%{_examplesdir}/glide3/tests
 
 # something is recompiled - use GCFLAGS too
 %{__make} -f makefile.autoconf install \
-	GLIDE_DEBUG_GCFLAGS="%{rpmcflags} %{!?debug:-fomit-frame-pointer -ffast-math}" \
+	GLIDE_DEBUG_GCFLAGS="%{rpmcflags} -fno-expensive-optimizations %{!?debug:-fomit-frame-pointer -ffast-math}" \
 	GLIDE_DEBUG_GDEFS="%{!?debug:-DBIG_OPT} %{?debug:-DGDBG_INFO_ON -DGLIDE_DEBUG}" \
 	DESTDIR=$RPM_BUILD_ROOT
 
