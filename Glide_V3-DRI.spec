@@ -106,7 +106,7 @@ lub Voodoo3.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_examplesdir}/glide3/tests
+install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/tests
 
 # something is recompiled - use GCFLAGS too
 %{__make} -f makefile.autoconf install \
@@ -122,12 +122,12 @@ ln -sf libglide3.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libglide3x_V3.so
 ln -sf libglide3.so.%{version} $RPM_BUILD_ROOT%{_libdir}/libglide3x.so
 
 # Install the examples and their source, no binaries
-install h3/glide3/tests/makefile.distrib $RPM_BUILD_ROOT%{_examplesdir}/glide3/tests/makefile
-install h3/glide3/tests/*.3df $RPM_BUILD_ROOT%{_examplesdir}/glide3/tests
-install h3/glide3/tests/test??.c $RPM_BUILD_ROOT%{_examplesdir}/glide3/tests
-install h3/glide3/tests/tldata.inc $RPM_BUILD_ROOT%{_examplesdir}/glide3/tests
-install h3/glide3/tests/tlib.[ch] $RPM_BUILD_ROOT%{_examplesdir}/glide3/tests
-gzip -9nf $RPM_BUILD_ROOT%{_examplesdir}/glide3/tests/*.3df
+install h3/glide3/tests/makefile.distrib $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/tests/makefile
+install h3/glide3/tests/*.3df $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/tests
+install h3/glide3/tests/test??.c $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/tests
+install h3/glide3/tests/tldata.inc $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/tests
+install h3/glide3/tests/tlib.[ch] $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/tests
+gzip -9nf $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/tests/*.3df
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -148,7 +148,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libglide3.so
 %{_libdir}/lib*.la
 %{_includedir}/glide3
-%{_examplesdir}/glide3
+%{_examplesdir}/%{name}-%{version}
 
 %files static
 %defattr(644,root,root,755)
