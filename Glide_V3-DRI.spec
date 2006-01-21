@@ -20,7 +20,6 @@ Patch5:		glide-gcc33.patch
 Patch6:		glide-ioctl.patch
 Patch7:		glide-morearchs.patch
 Patch8:		glide-gcc34.patch
-Icon:		3dfx.gif
 URL:		http://glide.sourceforge.net/
 BuildRequires:	XFree86-devel
 BuildRequires:	automake
