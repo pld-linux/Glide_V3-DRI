@@ -131,3 +131,200 @@
  FxU32 
  hwcInitAGPFifo(hwcBoardInfo *bInfo, FxBool enableHoleCounting) 
  {
+--- glide3x-20010309/h3/glide3/src/gaa.c.org	2006-12-23 11:51:47.967058500 +0100
++++ glide3x-20010309/h3/glide3/src/gaa.c	2006-12-23 12:04:56.144316500 +0100
+@@ -614,7 +614,7 @@
+       e = pointers;
+       if (mode)
+         e = *(float **)e;
+-      (float *)pointers += stride;
++      pointers += stride;
+       
+       ptX = FARRAY(e, gc->state.vData.vertexInfo.offset);
+       ptY = FARRAY(e, gc->state.vData.vertexInfo.offset+4);
+@@ -715,7 +715,7 @@
+       if (mode)
+         e = *(float **)e;
+       oow = 1.0f / FARRAY(e, gc->state.vData.wInfo.offset);        
+-      (float *)pointers += stride;
++      pointers += stride;
+       
+       ptX = FARRAY(e, gc->state.vData.vertexInfo.offset)
+         *oow*gc->state.Viewport.hwidth+gc->state.Viewport.ox;
+@@ -837,9 +837,9 @@
+         v1 = *(float **)v1;
+         v2 = *(float **)v2;
+       }
+-      (float *)pointers += stride;
++      pointers += stride;
+       if (ltype == GR_LINES)
+-        (float *)pointers += stride;
++        pointers += stride;
+       
+       /* draw from low Y to high Y */
+       if (FARRAY(v2, gc->state.vData.vertexInfo.offset+4) < FARRAY(v1, gc->state.vData.vertexInfo.offset+4)) {
+@@ -1018,9 +1018,9 @@
+           v1 = *(float **)v1;
+           v2 = *(float **)v2;
+         }
+-        (float *)pointers += stride;
++        pointers += stride;
+         if (ltype == GR_LINES)
+-          (float *)pointers += stride;
++          pointers += stride;
+         owa = oowa = 1.0f / FARRAY(v1, gc->state.vData.wInfo.offset);
+         owb = oowb = 1.0f / FARRAY(v2, gc->state.vData.wInfo.offset);
+       }
+@@ -1032,7 +1032,7 @@
+           v1 = *(float **)v1;
+           v2 = *(float **)v2;
+         }
+-        (float *)pointers += stride;
++        pointers += stride;
+         owb = oowb = 1.0f / FARRAY(v2, gc->state.vData.wInfo.offset);
+       }
+       
+@@ -1366,7 +1366,7 @@
+       b = *(float **)b;
+       c = *(float **)c;
+     }
+-    (float *)pointers += stride*3;
++    pointers += stride*3;
+ 
+     /* move culling test to here */
+     {
+@@ -1540,7 +1540,7 @@
+       b = *(float **)b;
+       c = *(float **)c;
+     }
+-    (float *)pointers += stride*3;
++    pointers += stride*3;
+     oowa = 1.0f / FARRAY(a, gc->state.vData.wInfo.offset);        
+     oowb = 1.0f / FARRAY(b, gc->state.vData.wInfo.offset);        
+     oowc = 1.0f / FARRAY(c, gc->state.vData.wInfo.offset);        
+@@ -1705,7 +1705,7 @@
+   if (type == kSetupFan) {
+     v[0] = (mode == 0) ? pointers : *(float **)pointers;
+     while (sCount--) {
+-      (float *)pointers += stride;
++      pointers += stride;
+       if (mode) {
+         v[1] = *(float **)pointers;
+         v[2] = *((float **)pointers+1);
+@@ -1747,7 +1747,7 @@
+         _grAADrawTriangles(1, type, 3, v);
+       else
+         _grAAVpDrawTriangles(1, type, 3, v);    
+-      (float *)pointers += stride;
++      pointers += stride;
+       flip = ~flip;
+     }
+     flip = ~flip;
+--- glide3x-20010309/h3/glide3/src/gdraw.c.org	2006-12-23 12:08:15.640784250 +0100
++++ glide3x-20010309/h3/glide3/src/gdraw.c	2006-12-23 12:09:03.163754250 +0100
+@@ -403,7 +403,7 @@
+         vPtr = pointers;
+         if (mode) vPtr = *(float **)vPtr;
+         
+-        (float *)pointers += stride;
++        pointers += stride;
+         
+         GDBG_INFO_MORE(gc->myLevel, "(%f %f)\n",  
+                        FARRAY(vPtr,gc->state.vData.vertexInfo.offset), 
+@@ -492,7 +492,7 @@
+         if (mode)
+           vPtr = *(float **)vPtr;
+         oow = 1.0f / FARRAY(vPtr, gc->state.vData.wInfo.offset);        
+-        (float *)pointers += stride;
++        pointers += stride;
+         
+         {
+           FxU32 x, y;
+@@ -617,9 +617,9 @@
+           a = *(float **)a;
+           b = *(float **)b;
+         }
+-        (float *)pointers += stride;
++        pointers += stride;
+         if (ltype == GR_LINES)
+-          (float *)pointers += stride;
++          pointers += stride;
+         
+         /*
+         ** compute absolute deltas and draw from low Y to high Y
+@@ -779,7 +779,7 @@
+             a = *(float **)a;
+             b = *(float **)b;
+           }
+-          (float *)pointers += stride;
++          pointers += stride;
+           owa = oowa = 1.0f / FARRAY(a, gc->state.vData.wInfo.offset);        
+           owb = oowb = 1.0f / FARRAY(b, gc->state.vData.wInfo.offset);        
+           pointers += stride;
+@@ -782,7 +782,7 @@
+           (float *)pointers += stride;
+           owa = oowa = 1.0f / FARRAY(a, gc->state.vData.wInfo.offset);        
+           owb = oowb = 1.0f / FARRAY(b, gc->state.vData.wInfo.offset);        
+-          (float *)pointers += stride;
++          pointers += stride;
+         }
+         else {
+           owa = oowa = oowb;
+@@ -792,7 +792,7 @@
+             a = *(float **)a;
+             b = *(float **)b;
+           }
+-          (float *)pointers += stride;
++          pointers += stride;
+           owb = oowb = 1.0f / FARRAY(b, gc->state.vData.wInfo.offset);
+         }
+         fay = tmp1 = FARRAY(a, gc->state.vData.vertexInfo.offset+4)
+@@ -944,7 +944,7 @@
+         vPtr = pointers;
+         if (mode)
+           vPtr = *(float **)vPtr;
+-        (float *)pointers += stride;
++        pointers += stride;
+         
+         i = gc->tsuDataList[dataElem];
+         
+@@ -984,7 +984,7 @@
+                  *oow*gc->state.Viewport.hwidth + gc->state.Viewport.ox);
+         TRI_SETF(FARRAY(vPtr, 4)
+                  *oow*gc->state.Viewport.hheight + gc->state.Viewport.oy);
+-        (float *)pointers += stride;
++        pointers += stride;
+         
+         TRI_VP_SETFS(vPtr,oow);
+       }
+--- glide3x-20010309/h3/glide3/src/gstrip.c.org	2006-12-23 12:13:50.669722250 +0100
++++ glide3x-20010309/h3/glide3/src/gstrip.c	2006-12-23 12:14:04.282573000 +0100
+@@ -188,7 +188,7 @@
+         vPtr = pointers;
+         if (mode)
+           vPtr = *(float **)vPtr;
+-        (float *)pointers += stride;
++        pointers += stride;
+         
+         TRI_SETF(FARRAY(vPtr, 0));
+         dataElem = 0;
+@@ -228,7 +228,7 @@
+                  *oow*gc->state.Viewport.hwidth + gc->state.Viewport.ox);
+         TRI_SETF(FARRAY(vPtr, 4)
+                  *oow*gc->state.Viewport.hheight + gc->state.Viewport.oy);
+-        (float *)pointers += stride;
++        pointers += stride;
+ 
+         TRI_VP_SETFS(vPtr, oow);
+       }
+--- glide3x-20010309/h3/glide3/src/distrip.c.org	2006-12-23 12:18:36.047557250 +0100
++++ glide3x-20010309/h3/glide3/src/distrip.c	2006-12-23 12:18:46.088184750 +0100
+@@ -450,7 +450,7 @@
+     else {
+       while ((int)Count >= 3) {
+         grDrawTriangle(*(float **)pointers, *((float **)pointers+1), *((float **)pointers+2));
+-        (float *)pointers += 3;
++        pointers += 3;
+         Count -= 3;
+       }
+     }
