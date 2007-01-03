@@ -1,0 +1,33 @@
+--- glide3x-20010309-orig/h3/glide3/src/xdraw2.inc.S	2006-06-03 00:42:40.000000000 +0000
++++ glide3x-20010309/h3/glide3/src/xdraw2.inc.S	2006-06-03 13:09:54.000000000 +0000
+@@ -55,7 +55,8 @@
+ 
+ .file "xdraw2.inc.S"
+ 
+-
++#ifndef XDRAW2_INC_MACROS_0
++#define XDRAW2_INC_MACROS_0
+ .macro GR_FIFO_WRITE __addr __offset __data
+ 	mov \__data , \__offset(\__addr)
+ .endm	/*  GR_FIFO_WRITE */
+@@ -69,6 +70,7 @@
+ .macro WRITE_MM1LOW_FIFO 
+ 	movd %mm1 , (%ebp)	/*  store current param | previous param */
+ .endm	/*  WRITE_MM1LOW_FIFO */
++#endif
+ 
+ 
+ #if 0
+@@ -812,9 +814,12 @@
+ #define packCol %edi
+ #define tempVal %edi
+ 
++#ifndef XDRAW2_INC_MACROS_1
++#define XDRAW2_INC_MACROS_1
+ .macro GR_FIFO_WRITE __addr __offset __data
+ 	mov \__data , \__offset(\__addr)
+ .endm	/*  GR_FIFO_WRITE */
++#endif
+ 
+ .align 4
+ LOCAL(__triBegin):
