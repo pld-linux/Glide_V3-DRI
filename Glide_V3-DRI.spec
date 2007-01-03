@@ -19,6 +19,8 @@ Patch5:		glide-gcc33.patch
 Patch6:		glide-ioctl.patch
 Patch7:		glide-morearchs.patch
 Patch8:		glide-gcc34.patch
+Patch9:		glide-gcc4.patch
+Patch10:	glide-no_redefine_macro.patch
 URL:		http://glide.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -88,6 +90,8 @@ lub Voodoo3.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
+%patch10 -p1
 
 %build
 %{__libtoolize}
