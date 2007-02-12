@@ -1,7 +1,7 @@
 %define snapdate 20010309
 Summary:	Glide runtime for 3Dfx Voodoo Banshee and Voodoo3 boards
-Summary(ko.UTF-8):   3Dfx 부두 벤쉬/3 비디오카드용 Glide 런타임 라이브러리
-Summary(pl.UTF-8):   Biblioteki Glide dla kart 3Dfx Voodoo Banshee oraz Voodoo3
+Summary(ko.UTF-8):	3Dfx 부두 벤쉬/3 비디오카드용 Glide 런타임 라이브러리
+Summary(pl.UTF-8):	Biblioteki Glide dla kart 3Dfx Voodoo Banshee oraz Voodoo3
 Name:		Glide_V3-DRI
 Version:	3.10.0
 Release:	0.%{snapdate}.13
@@ -46,7 +46,7 @@ wsparcie dla wersji Glide z DRI i bez DRI.
 
 %package devel
 Summary:	Development headers for Glide 3.x
-Summary(pl.UTF-8):   Pliki nagłówkowe Glide 3.x
+Summary(pl.UTF-8):	Pliki nagłówkowe Glide 3.x
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Provides:	Glide3-DRI-devel
@@ -64,7 +64,7 @@ Interactive Voodoo Banshe lub Voodoo3.
 
 %package static
 Summary:	Static library Glide 3.x
-Summary(pl.UTF-8):   Statyczne biblioteki Glide 3.x
+Summary(pl.UTF-8):	Statyczne biblioteki Glide 3.x
 Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 Provides:	Glide3-DRI-static
