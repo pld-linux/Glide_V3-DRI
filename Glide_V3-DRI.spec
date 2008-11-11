@@ -4,7 +4,7 @@ Summary(ko.UTF-8):	3Dfx 부두 벤쉬/3 비디오카드용 Glide 런타임 라�
 Summary(pl.UTF-8):	Biblioteki Glide dla kart 3Dfx Voodoo Banshee oraz Voodoo3
 Name:		Glide_V3-DRI
 Version:	3.10.0
-Release:	0.%{snapdate}.13
+Release:	0.%{snapdate}.14
 Epoch:		1
 License:	3dfx Glide General Public License, 3Dfx Interactive Inc.
 Group:		X11/Libraries
