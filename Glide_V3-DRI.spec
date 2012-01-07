@@ -1,5 +1,5 @@
 %define snapdate 20010309
-%define	rel	15
+%define	rel	16
 Summary:	Glide runtime for 3Dfx Voodoo Banshee and Voodoo3 boards
 Summary(ko.UTF-8):	3Dfx 부두 벤쉬/3 비디오카드용 Glide 런타임 라이브러리
 Summary(pl.UTF-8):	Biblioteki Glide dla kart 3Dfx Voodoo Banshee oraz Voodoo3
@@ -20,14 +20,12 @@ Patch5:		glide-gcc33.patch
 Patch6:		glide-ioctl.patch
 Patch7:		glide-morearchs.patch
 Patch8:		glide-gcc34.patch
-Patch9:	glide-no_redefine_macro.patch
+Patch9:		glide-no_redefine_macro.patch
 URL:		http://glide.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
 BuildRequires:	xorg-lib-libX11-devel
-BuildRequires:	xorg-lib-libXau-devel
-BuildRequires:	xorg-lib-libXdmcp-devel
 BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libXxf86dga-devel
 BuildRequires:	xorg-lib-libXxf86vm-devel
@@ -105,10 +103,10 @@ lub Voodoo3.
 	--enable-amd3d
 %endif
 
-%{__make} -f makefile.autoconf all \
+%{__make} -j1 -f makefile.autoconf all \
 	GLIDE_DEBUG_GCFLAGS="%{rpmcflags} -fno-expensive-optimizations %{!?debug:-fomit-frame-pointer -ffast-math}" \
 	GLIDE_DEBUG_GDEFS="%{!?debug:-DBIG_OPT} %{?debug:-DGDBG_INFO_ON -DGLIDE_DEBUG}" \
-	LINK_LIBS="-L/usr/X11R6/%{_lib} -lX11 -lXext -lXxf86dga -lXxf86vm -lm"
+	LINK_LIBS="-lX11 -lXext -lXxf86dga -lXxf86vm -lm"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -118,7 +116,7 @@ install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/tests
 %{__make} -f makefile.autoconf install \
 	GLIDE_DEBUG_GCFLAGS="%{rpmcflags} -fno-expensive-optimizations %{!?debug:-fomit-frame-pointer -ffast-math}" \
 	GLIDE_DEBUG_GDEFS="%{!?debug:-DBIG_OPT} %{?debug:-DGDBG_INFO_ON -DGLIDE_DEBUG}" \
-	LINK_LIBS="-L/usr/X11R6/%{_lib} -lX11 -lXext -lXxf86dga -lXxf86vm -lm" \
+	LINK_LIBS="-lX11 -lXext -lXxf86dga -lXxf86vm -lm" \
 	DESTDIR=$RPM_BUILD_ROOT
 
 # used by tdfx_dri.so from XFree86
@@ -145,6 +143,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc glide_license.txt
 %attr(755,root,root) %{_libdir}/libglide3.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libglide3.so.3
 %attr(755,root,root) %{_libdir}/libglide3-v3.so
 %attr(755,root,root) %{_libdir}/libglide3x.so
 %attr(755,root,root) %{_libdir}/libglide3x_V3.so
@@ -152,10 +151,10 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libglide3.so
-%{_libdir}/lib*.la
+%{_libdir}/libglide3.la
 %{_includedir}/glide3
 %{_examplesdir}/%{name}-%{version}
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
+%{_libdir}/libglide3.a
