@@ -20,7 +20,8 @@ Patch5:		glide-gcc33.patch
 Patch6:		glide-ioctl.patch
 Patch7:		glide-morearchs.patch
 Patch8:		glide-gcc34.patch
-Patch9:		glide-no_redefine_macro.patch
+Patch9:		glide-gcc4.patch
+Patch10:	glide-no_redefine_macro.patch
 URL:		http://glide.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -88,7 +89,8 @@ lub Voodoo3.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-%patch9 -p1
+%patch9 -p2
+%patch10 -p1
 
 %build
 %{__libtoolize}
@@ -136,8 +138,8 @@ gzip -9nf $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}/tests/*.3df
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post   -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+%post	-p /sbin/ldconfig
+%postun	-p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
