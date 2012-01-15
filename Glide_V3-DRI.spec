@@ -186,8 +186,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libglide3.a
 
 %if %{with glide3_sdk}
-%files -n Glide3_SDK
+%files -n Glide3x_SDK
 %defattr(644,root,root,755)
 %{_includedir}/glide3
-%{_examplesdir}/%{name}-%{version}
+%{_examplesdir}/glide3x-%{version}
 %endif
