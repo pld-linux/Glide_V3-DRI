@@ -3,7 +3,7 @@
 %bcond_with	glide3_sdk	# build glide3x SDK here (normally built from Glide_V5-DRI.spec)
 #
 %define snapdate 20010309
-%define	rel	16
+%define	rel	17
 Summary:	Glide runtime for 3Dfx Voodoo Banshee and Voodoo3 boards
 Summary(ko.UTF-8):	3Dfx 부두 벤쉬/3 비디오카드용 Glide 런타임 라이브러리
 Summary(pl.UTF-8):	Biblioteki Glide dla kart 3Dfx Voodoo Banshee oraz Voodoo3
@@ -26,6 +26,8 @@ Patch7:		glide-morearchs.patch
 Patch8:		glide-gcc34.patch
 Patch9:		glide-gcc4.patch
 Patch10:	glide-no_redefine_macro.patch
+Patch11:	glide-format.patch
+Patch12:	glide-include.patch
 URL:		http://glide.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -112,6 +114,8 @@ Interactive Voodoo przy użyciu interfejsu Glide 3.x.
 %patch8 -p1
 %patch9 -p2
 %patch10 -p1
+%patch11 -p1
+%patch12 -p1
 
 %build
 %{__libtoolize}
